@@ -42,38 +42,39 @@ test('Should convert obj to xml', () => {
 
 test('Should create an order', async () => {
   const yunda = new Yunda(partnerid, password, version, endpoint);
-  post.mockResolvedValue({ data: '<responses><response><mail_no>4060005454879</mail_no><pdf_info>xxx</pdf_info><status>1</status><msg>创建订单成功</msg></response></responses>' });
+  post.mockResolvedValue({
+    data:
+      '<responses><response><mail_no>4060005454879</mail_no><pdf_info>xxx</pdf_info><status>1</status><msg>创建订单成功</msg></response></responses>',
+  });
 
-  const res = await yunda.createOrder(
-    {
-      order_serial_no: crs(10),
-      khddh: crs(10),
-      order_type: EOrderType.common,
-      sender: {
-        name: 'sender',
-        address: 'here',
-      },
-      receiver: {
-        name: 'sender',
-        address: 'there',
-      },
-      items: [
-        {
-          item: {
-            name: 'item - 1',
-            number: '1',
-            remark: '',
-          },
-        },
-      ],
+  const res = await yunda.createOrder({
+    order_serial_no: crs(10),
+    khddh: crs(10),
+    order_type: EOrderType.common,
+    sender: {
+      name: 'sender',
+      address: 'here',
     },
-  );
+    receiver: {
+      name: 'sender',
+      address: 'there',
+    },
+    items: [
+      {
+        item: {
+          name: 'item - 1',
+          number: '1',
+          remark: '',
+        },
+      },
+    ],
+  });
 
   const obj = {
     mail_no: '4060005454879',
     pdf_info: 'xxx',
     status: '1',
-    msg: '创建订单成功'
+    msg: '创建订单成功',
   };
 
   expect(res).toMatchObject(obj);
